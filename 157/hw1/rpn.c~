@@ -1,0 +1,93 @@
+/*
+ *
+ *CS157 Homework 1
+ *
+ *This program searches a file containing air fares
+ *to find the best deal for the user.
+ *The file containing the air fares is named fares.db
+ *
+ *By: Yaowei Zong (zongyw)
+ *04/13/2015
+ *
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+//int calc(char oper[], int left, int right);
+//void result_base(char base, int result);
+
+int main(int argc, char *argv[]) {
+
+	int num1, num2, result;
+	char operator;
+	long int l1, l2;
+	//char operator[2];
+
+
+	// print out the args
+	printf("The %d args are:\n", argc);
+	for (int i = 0; i < argc; i++)
+		printf("%d\t%s\n", i, argv[i]);
+	// error message when too many or too few arguments
+	if (argc != 4 && argc != 5)	{
+		fprintf(stderr, "usage: %s [H|O|D] <left> <right> <operator>\n", argv[0]);
+		return 1;
+	}
+
+
+	// get numbers and operator
+	if (argc == 4)	{
+
+		l1 = strtol(argv[1], NULL, 0);
+		l2 = strtol(argv[2], NULL, 0);
+		printf("num1:%x,num2:%o,op:%c\n", l1, l2, operator);
+
+		//result = calc(operator, num1, num2);
+		//result_base('D', result);
+	}
+
+//	else {
+//		num1 = *argv[2];
+//		num2 = *argv[3];
+//		strcpy (operator, argv[4]);
+//	}
+	
+
+
+	return 0;
+}
+/*
+// --START-- Function Definition Zone
+int calc(char oper, int left, int right)	{
+	int result;
+	if (oper == "+")
+		result = left + right;
+	else if (oper ==  "-") == 0)
+		result = left - right;
+	else if (oper ==  "*") == 0)
+		result = left * right;
+	else if (strcmp(oper, "/") == 0)
+		result = left / right;
+	else if (strcmp(oper, ",") == 0)
+		result = abs(left - right);
+	else	{
+		fprintf(stderr, "usage: %s [H|O|D] <left> <right> <operator>\n", argv[0]);
+		return 2;
+	}
+	return result;
+
+}
+
+
+void result_base(char base, int result) {
+	switch (base) {
+	case 'H' : printf("%x\n", result);	break;
+	case 'O' : printf("%o\n", result);	break;
+	case 'D' : printf("%d\n", result);	break;
+	default: printf("%d\n", result);	break;
+	}
+}
+
+*/
