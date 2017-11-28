@@ -1,0 +1,118 @@
+/*
+ *
+ *CS156 Homework 4
+ *
+ *This program searches a file containing air fares
+ *to find the best deal for the user.
+ *The file containing the air fares is named fares.db
+ *
+ *By: Yaowei Zong (zongyw)
+ *03/31/2015
+ *
+ */
+
+#include <stdio.h>
+#include <string.h>
+
+// define max string length
+#define MAX 255
+
+int main()	{
+
+	// assign string variables
+	char airport[MAX];			// user input string
+	char source[MAX], destination[MAX];	// airport codes from user
+	char source_db[3], destination_db[3];	// airport codes from file
+	char match[MAX];			// file reading string
+	//char result[MAX] = "\0";
+	// assign integer variables
+	int price, stops;
+	int con_s = 0, con_d = 0, con_b = 0, con_h = 0;		// controls
+	int p_low = 999, p_few = 9, s_low = 999, s_few = 9;
+
+	// open file to read
+	FILE *db = fopen("fares.db", "r");
+	// check if input file exist.
+	if (db == NULL) {
+		printf("Can't open input file \"fares.db\"\n");
+		return 1;
+	}
+
+	// read source & destination airport codes from a user on one line
+	printf("From & to: ");
+	fgets(airport, sizeof(airport), stdin);
+	// read the two airport codes from the string to two strings
+	sscanf(airport, "%s %s", source, destination);
+
+	// read data from database file to string if not NULL
+	while (fgets(match, sizeof(match), db) != NULL)	{
+		// assign four data to four variables
+		sscanf(match, "%s %s %d $%d", source_db, destination_db, &stops, &price);
+		// control condition for correct source airport code match
+		if (strcmp(source, source_db) == 0)
+			con_s = 1;
+		// control condition for correct destination airport code match
+		if (strcmp(destination, destination_db) == 0)
+			con_d = 1;
+		// control condition for both correct airport code match
+		if ( (strcmp(source, source_db) == 0) && (strcmp(destination, destination_db) == 0) )	{
+			// control conditon for print result section header
+			if (con_h != 1 )
+			{
+				printf("Flights found for %s to %s are:\n", source, destination);
+				printf("    Fare    Stops\n"
+				       "    ====    =====\n");
+				con_h = 1;
+			}
+			// print necessary result
+			printf("    $%d    %d\n", price, stops);
+			con_b = 1;
+			//strcat (result, match);
+			//
+			{	int p_price = price;
+				int p_stop = stops;
+				if (p_price < p_low)
+				{
+					p_low = p_price;
+					p_few = p_stop;
+				}
+				else if ((p_price = p_low) && (p_stop < p_few))
+				{
+					p_few = p_stop;
+				}
+			}
+
+			// fewest stops conditions:
+			{	int s_price = price;
+				int s_stop = stops;
+				if (s_stop < s_few)
+				{
+					s_few = s_stop;
+					s_low = s_price;
+				}
+				else if ((s_stop = s_few) && (s_price < s_low))
+				{
+					s_low = s_price;
+				}
+			}
+
+		}
+
+		continue;
+	}
+
+	// control condition for error messages
+	if (con_s != 1)
+		printf("Missing source airport %s.\n", source);
+	if (con_d != 1)
+		printf("Missing destination airport %s.\n", destination);
+	if (con_b != 1)
+		printf("No %s-%s flight found.\n", source, destination);
+	if (con_b == 1)	{
+		printf("Best fare:$%d with %d stops.\n", p_low, p_few);
+		printf("Fewest stops:$%d with %d stops.\n", s_low, s_few);
+	}
+
+	fclose(db);
+	return 0;
+}

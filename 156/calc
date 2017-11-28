@@ -1,0 +1,54 @@
+#! /bin/bash
+#
+# CS155 Homework 4: Calculator
+#
+# By: Yaowei Zong (zongyw)
+# 02/17/2015
+# (c) Copyright 2015 All Rights Reserved
+#
+
+#Set variable to test non-numeric input.
+LN=$(echo $1 | sed 's/[0-9]//g')
+RN=$(echo $3 | sed 's/[0-9]//g')
+
+# Define error message when there are too many or too few arguments
+if [[ $# != 3 ]]
+	then
+	echo "usage: $0 <number> <operation> <number>"
+# Define left number error message.
+elif [[ $LN != "" ]]
+	then 
+	echo "$0: bad left number \"$1\""
+# Define right number error message.
+elif [[ $RN != "" ]]
+	then 
+	echo "$0: bad right number \"$3\""
+# Define $2 error message.
+elif [[ $2 != add && $2 != sub && $2 != mul && $2 != div ]]
+	then echo "$0: invalid operation \"$2\""
+# Define $2 commands.
+elif [[ $2 = add ]]
+	then
+	let ans=$1+$3
+	echo "Result is $ans"
+elif [[ $2 = sub ]]
+	then
+	let ans=$1-$3
+	echo "Result is $ans"
+elif [[ $2 = mul ]]
+	then
+	let ans=$1*$3
+	echo "Result is $ans"
+# Define error message when division by zero is attempted.
+elif [[ $2 = div && $3 -eq 0 ]]
+	then
+	echo "$0: oops"
+elif [[ $2 = div && $3 -ne 0 ]]
+	then
+	let ans=$1/$3
+	echo "Result is $ans"
+# Other error messages.
+elif [[ $? != 0 ]]
+	then
+	echo "usage: $0 <number> <operation> <number>"
+fi

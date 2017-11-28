@@ -1,0 +1,229 @@
+#! /bin/bash
+#
+# CS155 Bash Shell Script Calculator - Unit tests
+#
+# By: Liam Kelly
+# 2/11/2015
+# (c) Copyright 2015 All Rights Reserved
+#
+ 
+# Welcome message
+echo "Testing ./calc"
+
+# Test 1
+echo -n "Test 1:  'Addition'                        "
+if [[ `./calc 23 add 654321` = 'Result is 654344' ]]
+then
+	echo -e "\033[0;32m Passed\033[0m"
+else
+	echo -e "\033[0;31m Failed\033[0m"
+	echo '         Expected: Result is 654344'
+	echo "         Recived:  `./calc 23 add 654321`"
+fi
+
+# Test 2
+echo -n "Test 2:  'Subtraction'                     "
+if [[ `./calc 9 sub 12` = 'Result is -3' ]]
+then
+	echo -e "\033[0;32m Passed\033[0m"
+else
+	echo -e "\033[0;31m Failed\033[0m"
+	echo '         Expected: Result is -3'
+	echo "         Recived:  `./calc 9 sub 12`"
+fi
+
+# Test 3
+echo -n "Test 3:  'Multiplication'                  "
+if [[ `./calc 15 mul 3` = 'Result is 45' ]]
+then
+	echo -e "\033[0;32m Passed\033[0m"
+else
+	echo -e "\033[0;31m Failed\033[0m"
+	echo '         Expected: Result is 45'
+	echo "         Recived:  `./calc 15 mul 3`"
+fi
+
+# Test 4
+echo -n "Test 4:  'Division A'                      "
+if [[ `./calc 16 div 8` = 'Result is 2' ]]
+then
+	echo -e "\033[0;32m Passed\033[0m"
+else
+	echo -e "\033[0;31m Failed\033[0m"
+	echo '         Expected: Result is 2'
+	echo "         Recived:  `./calc 16 div 8`"
+fi
+
+# Test 5
+echo -n "Test 5:  'Division B'                      "
+if [[ `./calc 16 div 3` = 'Result is 5' ]]
+then
+	echo -e "\033[0;32m Passed\033[0m"
+else
+	echo -e "\033[0;31m Failed\033[0m"
+	echo '         Expected: Result is 5'
+	echo "         Recived:  `./calc 16 div 3`"
+fi
+
+# Test 6
+echo -n "Test 6:  'Division by 0'                   "
+if [[ `./calc 9 div 0` = './calc: oops' ]]
+then
+	echo -e "\033[0;32m Passed\033[0m"
+else
+	echo -e "\033[0;31m Failed\033[0m"
+	echo '         Expected: ./calc: oops'
+	echo "         Recived:  `./calc 9 div 0`"
+fi
+
+# Test 7
+echo -n "Test 7:  'Invalid operation'               "
+if [[ `./calc 1 + 2` = './calc: invalid operation "+"' ]]
+then
+	echo -e "\033[0;32m Passed\033[0m"
+else
+	echo -e "\033[0;31m Failed\033[0m"
+	echo '         Expected: ./calc: invalid operation "+"'
+	echo "         Recived:  `./calc 1 + 2`"
+fi
+
+# Test 8
+echo -n "Test 8:  'Left argument not a number'      "
+if [[ `./calc jack add 4` = './calc: bad left number "jack"' ]]
+then
+	echo -e "\033[0;32m Passed\033[0m"
+else
+	echo -e "\033[0;31m Failed\033[0m"
+	echo '         Expected: ./calc: bad left number "jack"'
+	echo "         Recived:  `./calc jack add 4`"
+fi
+
+# Test 9
+echo -n "Test 9:  'Right argument not a number'     "
+if [[ `./calc 9 mul Conan` = './calc: bad right number "Conan"' ]]
+then
+	echo -e "\033[0;32m Passed\033[0m"
+else
+	echo -e "\033[0;31m Failed\033[0m"
+	echo '         Expected: ./calc: bad right number "Conan"'
+	echo "         Recived:  `./calc 9 mul Conan`"
+fi
+
+# Test 10
+echo -n "Test 10: 'Negative number'                 "
+if [[ `./calc 3 add -2` = './calc: bad right number "-2"' ]]
+then
+	echo -e "\033[0;32m Passed\033[0m"
+else
+	echo -e "\033[0;31m Failed\033[0m"
+	echo '         Expected: ./calc: bad right number "-2"'
+	echo "         Recived:  `./calc 3 add -2`"
+fi
+
+# Test 11
+echo -n "Test 11: 'Too many arguments'              "
+if [[ `./calc 3 add 4 add 5` = 'usage: ./calc <number> <operation> <number>' ]]
+then
+	echo -e "\033[0;32m Passed\033[0m"
+else
+	echo -e "\033[0;31m Failed\033[0m"
+	echo '         Expected: usage: ./calc <number> <operation> <number>'
+	echo "         Recived:  `./calc 3 add 4 add 5`"
+fi
+
+# Test 12
+echo -n "Test 12: 'Too few arguments'               "
+if [[ `./calc` = 'usage: ./calc <number> <operation> <number>' ]]
+then
+	echo -e "\033[0;32m Passed\033[0m"
+else
+	echo -e "\033[0;31m Failed\033[0m"
+	echo '         Expected: .usage: ./calc <number> <operation> <number>'
+	echo "         Recived:  `./calc`"
+fi
+
+# Test output if different filename
+cp calc calc.copy
+
+echo "Rerunning tests 6-12 with different filename \"calc.copy\""
+echo "This is to verifiy error messages change with the filename"
+
+# Test 6-2
+echo -n "Test 6-2:  "
+if [[ `./calc.copy 9 div 0` = './calc.copy: oops' ]]
+then
+	echo -e "\033[0;32m Passed\033[0m"
+else
+	echo -e "\033[0;31m Failed\033[0m"
+	echo '         Expected: ./calc.copy: oops'
+	echo "         Recived:  `./calc.copy 9 div 0`"
+fi
+
+# Test 7-2
+echo -n "Test 7-2:  "
+if [[ `./calc.copy 1 + 2` = './calc.copy: invalid operation "+"' ]]
+then
+	echo -e "\033[0;32m Passed\033[0m"
+else
+	echo -e "\033[0;31m Failed\033[0m"
+	echo '         Expected: ./calc.copy: invalid operation "+"'
+	echo "         Recived:  `./calc.copy 1 + 2`"
+fi
+
+# Test 8-2
+echo -n "Test 8-2:  "
+if [[ `./calc.copy jack add 4` = './calc.copy: bad left number "jack"' ]]
+then
+	echo -e "\033[0;32m Passed\033[0m"
+else
+	echo -e "\033[0;31m Failed\033[0m"
+	echo '         Expected: ./calc.copy: bad left number "jack"'
+	echo "         Recived:  `./calc.copy jack add 4`"
+fi
+
+# Test 9-2
+echo -n "Test 9-2:  "
+if [[ `./calc.copy 9 mul Conan` = './calc.copy: bad right number "Conan"' ]]
+then
+	echo -e "\033[0;32m Passed\033[0m"
+else
+	echo -e "\033[0;31m Failed\033[0m"
+	echo '         Expected: ./calc.copy: bad right number "Conan"'
+	echo "         Recived:  `./calc.copy 9 mul Conan`"
+fi
+
+# Test 10-2
+echo -n "Test 10-2: "
+if [[ `./calc.copy 3 add -2` = './calc.copy: bad right number "-2"' ]]
+then
+	echo -e "\033[0;32m Passed\033[0m"
+else
+	echo -e "\033[0;31m Failed\033[0m"
+	echo '         Expected: ./calc.copy: bad right number "-2"'
+	echo "         Recived:  `./calc.copy 3 add -2`"
+fi
+
+# Test 11-2
+echo -n "Test 11-2: "
+if [[ `./calc.copy 3 add 4 add 5` = 'usage: ./calc.copy <number> <operation> <number>' ]]
+then
+	echo -e "\033[0;32m Passed\033[0m"
+else
+	echo -e "\033[0;31m Failed\033[0m"
+	echo '         Expected: usage: ./calc.copy <number> <operation> <number>'
+	echo "         Recived:  `./calc.copy 3 add 4 add 5`"
+fi
+
+# Test 12-2
+echo -n "Test 12-2: "
+if [[ `./calc.copy` = 'usage: ./calc.copy <number> <operation> <number>' ]]
+then
+	echo -e "\033[0;32m Passed\033[0m"
+else
+	echo -e "\033[0;31m Failed\033[0m"
+	echo '         Expected: .usage: ./calc.copy <number> <operation> <number>'
+	echo "         Recived:  `./calc.copy`"
+fi
+
+# Clean up
+rm calc.copy
