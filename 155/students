@@ -1,0 +1,22 @@
+1
+cat ~cs155/pub/hw2Files/ge*.grades
+
+2
+ls ~cs155/pub/hw2Files/*.{info,log} | cut -d "/" -f 9
+
+3
+grep -w [0-9]/100 ~cs155/pub/hw2Files/*.grades | cut -d "/" -f 9- >substandard
+
+4
+mkdir information
+cp ~cs155/pub/hw2Files/*.info information
+
+5
+cut -d ";" -f 4 *grades >~/classes
+cat ~/classes | sort -u
+
+6
+grep "04.22.06" ~cs155/pub/hw2Files/*.log | cut -d "." -f 1 | cut -d "/" -f 9 | sort -u >EarthDay
+
+7
+wc -l *.log | cut -d "." -f 1 | sort -n >~/log.info

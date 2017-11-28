@@ -1,0 +1,8 @@
+#!/bin/tcsh -f
+
+echo Running program runme2
+hostname
+ls -ld dir_a
+chmod 000 dir_a
+ls -ld dir_a
+uname -a

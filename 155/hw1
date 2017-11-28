@@ -1,0 +1,13 @@
+/s/bach/m/under/zongyw
+I'm not in denial.
+I'm just very selective about the reality that I accept.
+Vatican City has about 4.55 popes per square km.
+The best numbers are 21825, 1957, 233377257, and pi.
+mkdir Groot
+ls Groot
+cd Groot
+ls ~cs155/bin >list
+cp list ~/my-list
+cd
+rm -r Groot
+cp ~cs155/pub/hw1Files/* ~

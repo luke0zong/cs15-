@@ -1,0 +1,8 @@
+#! /bin/bash
+dir=155tmp
+mkdir $dir
+touch $dir/helloWorld
+echo "Lala it's Monday" > $dir/mondaze
+cat $dir/mondaze
+date
+

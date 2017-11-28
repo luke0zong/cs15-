@@ -1,0 +1,11 @@
+#! /bin/bash
+echo "Enter five numbers: "
+let sum=0
+let i=0
+while [[ i -lt 5 ]]
+do
+    read num
+    let sum=sum+num
+    let i=i+1
+done
+echo $sum
